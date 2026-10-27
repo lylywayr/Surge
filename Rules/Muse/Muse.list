@@ -1,0 +1,26 @@
+#!name=Muse (Meta)
+#!desc=Meta Muse 个人 AI 智能体分流规则（Surge / Stash / Loon / Quantumult X / Shadowrocket）
+#!homepage=https://github.com/VPSDance/ai-proxy-rules
+# 证书校验：muse.ai 的 TLS 证书主体为 O=Meta Platforms, Inc.，CN=*.muse.ai
+# 地区限制：截至 2026-10，仅美国/加拿大可用 → 策略组建议指向美区节点
+
+# ---- 核心：Muse 本体 ----
+DOMAIN-SUFFIX,muse.ai
+
+# ---- Meta AI 平台依赖（后端 API / 实时通道 / 用户内容 CDN）----
+DOMAIN-SUFFIX,meta.ai
+DOMAIN-SUFFIX,metaaivm.com
+DOMAIN-SUFFIX,metaaiusercontent.com
+DOMAIN-SUFFIX,ecto1usercontent.com
+DOMAIN-SUFFIX,meta-agents-apps.workers.dev
+
+# ---- 可选：登录与媒体（Instagram / Facebook 基建）----
+# muse.ai 会 302 到 instagram.com 完成登录，媒体走 fbcdn / cdninstagram。
+# 若你的配置里 Facebook / Instagram 已有独立策略，可删掉本节，避免与已有分组抢流量。
+DOMAIN-SUFFIX,instagram.com
+DOMAIN-SUFFIX,cdninstagram.com
+DOMAIN-SUFFIX,facebook.com
+DOMAIN-SUFFIX,fbcdn.net
+DOMAIN-SUFFIX,fbsbx.com
+DOMAIN-SUFFIX,fb.com
+DOMAIN-SUFFIX,atmeta.com
