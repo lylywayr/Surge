@@ -1,0 +1,21 @@
+# Muse (Meta) — Egern 原生 rule_set
+# 证书校验：O=Meta Platforms, Inc.，CN=*.muse.ai
+# 2026-10 仅美/加可用，策略指向美区节点
+
+# 核心：Muse 本体（含 www / api 等子域）
+domain_suffix_set:
+  - "muse.ai"
+  - "meta.ai"
+  - "metaaivm.com"
+  - "metaaiusercontent.com"
+  - "ecto1usercontent.com"
+  - "meta-agents-apps.workers.dev"
+
+# 可选：登录 / 媒体（已有 Facebook、Instagram 分组时可删掉下面 7 行）
+  - "instagram.com"
+  - "cdninstagram.com"
+  - "facebook.com"
+  - "fbcdn.net"
+  - "fbsbx.com"
+  - "fb.com"
+  - "atmeta.com"
