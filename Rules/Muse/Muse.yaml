@@ -1,0 +1,20 @@
+# Muse (Meta) — Clash classical / Egern rule_set
+# 证书校验：O=Meta Platforms, Inc.，CN=*.muse.ai
+# 地区限制：2026-10 仅美/加可用，策略建议指向美区
+payload:
+  # Core
+  - "DOMAIN-SUFFIX,muse.ai"
+  # Meta AI 平台依赖
+  - "DOMAIN-SUFFIX,meta.ai"
+  - "DOMAIN-SUFFIX,metaaivm.com"
+  - "DOMAIN-SUFFIX,metaaiusercontent.com"
+  - "DOMAIN-SUFFIX,ecto1usercontent.com"
+  - "DOMAIN-SUFFIX,meta-agents-apps.workers.dev"
+  # 可选：登录 / 媒体（已有 Facebook、Instagram 分组时可删）
+  - "DOMAIN-SUFFIX,instagram.com"
+  - "DOMAIN-SUFFIX,cdninstagram.com"
+  - "DOMAIN-SUFFIX,facebook.com"
+  - "DOMAIN-SUFFIX,fbcdn.net"
+  - "DOMAIN-SUFFIX,fbsbx.com"
+  - "DOMAIN-SUFFIX,fb.com"
+  - "DOMAIN-SUFFIX,atmeta.com"
