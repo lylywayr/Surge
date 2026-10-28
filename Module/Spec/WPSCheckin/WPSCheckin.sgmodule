@@ -6,7 +6,7 @@
 #!arguments-desc=cookie：是否自动抓取 wps_sid（抓到一次后可填 false 关闭）；hour / minute：每日定时执行的时、分（默认 10:00）；hot：限量爆款；trial：会员试用；signin：每日签到；fragment：打卡领会员；lottery：天天抽奖；clockin：小程序打卡；merge：合并通知，不单独推送；debug：打印接口原始响应，排错用。布尔参数填 true / false。
 
 [MITM]
-hostname = personal-act.wps.cn
+hostname = %APPEND% personal-act.wps.cn
 
 [Script]
 WPS Cookie = type=http-request, pattern=^https:\/\/personal-act\.wps\.cn\/activity-rubik\/activity\/page_info, requires-body=false, script-path=https://raw.githubusercontent.com/lylywayr/Surge/Master/Module/Spec/WPSCheckin/wps.cookie.js, argument="{{{cookie}}}", timeout=10, img-url=https://raw.githubusercontent.com/MaYIHEI/pin/refs/heads/main/app/wps.png
