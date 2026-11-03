@@ -1,0 +1,10 @@
+#!name=DNS 分流（国内解析 / 国外远端）
+#!desc=把本地 DNS 固定为国内解析器，境外域名随规则走代理、由节点远端解析，本地污染不参与判定。可整体开关，禁用即回滚到配置里的 DNS。
+#!author=lylywayr
+#!category=网络
+#!arguments=dns1:223.5.5.5,dns2:119.29.29.29,hijack1:8.8.8.8:53,hijack2:8.8.4.4:53
+#!arguments-desc=dns1 / dns2：本地解析用的国内 DNS；hijack1 / hijack2：被 Surge 接管的硬编码 DNS（如 Google 的 8.8.8.8）
+
+[General]
+dns-server = {{{dns1}}}, {{{dns2}}}
+hijack-dns = {{{hijack1}}}, {{{hijack2}}}
