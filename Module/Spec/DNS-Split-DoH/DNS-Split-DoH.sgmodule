@@ -21,6 +21,10 @@ google.com = server:{{{doh}}}
 *.googlevideo.com = server:{{{doh}}}
 
 # OpenAI / Anthropic
+openai.com = server:{{{doh}}}
+chatgpt.com = server:{{{doh}}}
+anthropic.com = server:{{{doh}}}
+claude.ai = server:{{{doh}}}
 *.openai.com = server:{{{doh}}}
 *.chatgpt.com = server:{{{doh}}}
 *.oaistatic.com = server:{{{doh}}}
@@ -29,6 +33,10 @@ google.com = server:{{{doh}}}
 *.claude.ai = server:{{{doh}}}
 
 # Telegram
+telegram.org = server:{{{doh}}}
+t.me = server:{{{doh}}}
+telegram.me = server:{{{doh}}}
+telegra.ph = server:{{{doh}}}
 *.telegram.org = server:{{{doh}}}
 *.t.me = server:{{{doh}}}
 *.telegram.me = server:{{{doh}}}
@@ -41,6 +49,14 @@ github.com = server:{{{doh}}}
 *.githubassets.com = server:{{{doh}}}
 
 # 社交 / 媒体
+twitter.com = server:{{{doh}}}
+x.com = server:{{{doh}}}
+facebook.com = server:{{{doh}}}
+instagram.com = server:{{{doh}}}
+whatsapp.com = server:{{{doh}}}
+reddit.com = server:{{{doh}}}
+discord.com = server:{{{doh}}}
+signal.org = server:{{{doh}}}
 *.twitter.com = server:{{{doh}}}
 *.x.com = server:{{{doh}}}
 *.twimg.com = server:{{{doh}}}
@@ -54,6 +70,13 @@ github.com = server:{{{doh}}}
 *.discordapp.com = server:{{{doh}}}
 
 # 资讯 / 其他
+wikipedia.org = server:{{{doh}}}
+wikimedia.org = server:{{{doh}}}
+bbc.com = server:{{{doh}}}
+nytimes.com = server:{{{doh}}}
+medium.com = server:{{{doh}}}
+proton.me = server:{{{doh}}}
+protonmail.com = server:{{{doh}}}
 *.wikipedia.org = server:{{{doh}}}
 *.wikimedia.org = server:{{{doh}}}
 *.bbc.com = server:{{{doh}}}
