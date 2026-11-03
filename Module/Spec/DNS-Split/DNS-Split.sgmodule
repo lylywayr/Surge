@@ -1,10 +1,61 @@
-#!name=DNS 分流（国内解析 / 国外远端）
-#!desc=把本地 DNS 固定为国内解析器，境外域名随规则走代理、由节点远端解析，本地污染不参与判定。可整体开关，禁用即回滚到配置里的 DNS。
+#!name=DNS 分流（境外域名走加密 DNS）
+#!desc=用 [Host] 给常用境外域名单独指定加密 DNS，绕开本地投毒；国内域名仍走配置里的 dns-server。禁用模块即完全回滚。
 #!author=lylywayr
 #!category=网络
-#!arguments=dns1:223.5.5.5,dns2:119.29.29.29,hijack1:8.8.8.8:53,hijack2:8.8.4.4:53
-#!arguments-desc=dns1 / dns2：本地解析用的国内 DNS；hijack1 / hijack2：被 Surge 接管的硬编码 DNS（如 Google 的 8.8.8.8）
+#!arguments=doh:https://doh.pub/dns-query
+#!arguments-desc=doh：境外域名使用的加密 DNS，默认腾讯 DoH（实测能返回真实 IP）。可换成自建或其他 DoH 地址。
 
-[General]
-dns-server = {{{dns1}}}, {{{dns2}}}
-hijack-dns = {{{hijack1}}}, {{{hijack2}}}
+[Host]
+# Google / YouTube
+google.com = server:{{{doh}}}
+*.google.com = server:{{{doh}}}
+*.googleapis.com = server:{{{doh}}}
+*.gstatic.com = server:{{{doh}}}
+*.googleusercontent.com = server:{{{doh}}}
+*.youtube.com = server:{{{doh}}}
+*.ytimg.com = server:{{{doh}}}
+*.ggpht.com = server:{{{doh}}}
+*.googlevideo.com = server:{{{doh}}}
+
+# OpenAI / Anthropic
+*.openai.com = server:{{{doh}}}
+*.chatgpt.com = server:{{{doh}}}
+*.oaistatic.com = server:{{{doh}}}
+*.oaiusercontent.com = server:{{{doh}}}
+*.anthropic.com = server:{{{doh}}}
+*.claude.ai = server:{{{doh}}}
+
+# Telegram
+*.telegram.org = server:{{{doh}}}
+*.t.me = server:{{{doh}}}
+*.telegram.me = server:{{{doh}}}
+*.telegra.ph = server:{{{doh}}}
+
+# GitHub
+github.com = server:{{{doh}}}
+*.github.com = server:{{{doh}}}
+*.githubusercontent.com = server:{{{doh}}}
+*.githubassets.com = server:{{{doh}}}
+
+# 社交 / 媒体
+*.twitter.com = server:{{{doh}}}
+*.x.com = server:{{{doh}}}
+*.twimg.com = server:{{{doh}}}
+*.facebook.com = server:{{{doh}}}
+*.fbcdn.net = server:{{{doh}}}
+*.instagram.com = server:{{{doh}}}
+*.whatsapp.com = server:{{{doh}}}
+*.reddit.com = server:{{{doh}}}
+*.redd.it = server:{{{doh}}}
+*.discord.com = server:{{{doh}}}
+*.discordapp.com = server:{{{doh}}}
+
+# 资讯 / 其他
+*.wikipedia.org = server:{{{doh}}}
+*.wikimedia.org = server:{{{doh}}}
+*.bbc.com = server:{{{doh}}}
+*.nytimes.com = server:{{{doh}}}
+*.medium.com = server:{{{doh}}}
+*.protonmail.com = server:{{{doh}}}
+*.proton.me = server:{{{doh}}}
+*.signal.org = server:{{{doh}}}
