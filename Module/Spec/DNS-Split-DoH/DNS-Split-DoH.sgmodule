@@ -1,0 +1,64 @@
+#!name=DNS 分流（境外域名走代理 DoH）
+#!desc=境外域名用 [Host] 指定 Google DoH 解析（随规则走代理，不受投毒影响），国内域名仍走配置里的 dns-server。禁用模块即完全回滚。
+#!author=lylywayr
+#!category=网络
+#!arguments=doh:https://dns.google/dns-query
+#!arguments-desc=doh：境外域名使用的加密 DNS。默认 Google DoH（经代理访问，实测返回真实 IP）；也可换 https://cloudflare-dns.com/dns-query
+
+[General]
+encrypted-dns-follow-outbound-mode = true
+
+[Host]
+# Google / YouTube
+google.com = server:{{{doh}}}
+*.google.com = server:{{{doh}}}
+*.googleapis.com = server:{{{doh}}}
+*.gstatic.com = server:{{{doh}}}
+*.googleusercontent.com = server:{{{doh}}}
+*.youtube.com = server:{{{doh}}}
+*.ytimg.com = server:{{{doh}}}
+*.ggpht.com = server:{{{doh}}}
+*.googlevideo.com = server:{{{doh}}}
+
+# OpenAI / Anthropic
+*.openai.com = server:{{{doh}}}
+*.chatgpt.com = server:{{{doh}}}
+*.oaistatic.com = server:{{{doh}}}
+*.oaiusercontent.com = server:{{{doh}}}
+*.anthropic.com = server:{{{doh}}}
+*.claude.ai = server:{{{doh}}}
+
+# Telegram
+*.telegram.org = server:{{{doh}}}
+*.t.me = server:{{{doh}}}
+*.telegram.me = server:{{{doh}}}
+*.telegra.ph = server:{{{doh}}}
+
+# GitHub
+github.com = server:{{{doh}}}
+*.github.com = server:{{{doh}}}
+*.githubusercontent.com = server:{{{doh}}}
+*.githubassets.com = server:{{{doh}}}
+
+# 社交 / 媒体
+*.twitter.com = server:{{{doh}}}
+*.x.com = server:{{{doh}}}
+*.twimg.com = server:{{{doh}}}
+*.facebook.com = server:{{{doh}}}
+*.fbcdn.net = server:{{{doh}}}
+*.instagram.com = server:{{{doh}}}
+*.whatsapp.com = server:{{{doh}}}
+*.reddit.com = server:{{{doh}}}
+*.redd.it = server:{{{doh}}}
+*.discord.com = server:{{{doh}}}
+*.discordapp.com = server:{{{doh}}}
+
+# 资讯 / 其他
+*.wikipedia.org = server:{{{doh}}}
+*.wikimedia.org = server:{{{doh}}}
+*.bbc.com = server:{{{doh}}}
+*.nytimes.com = server:{{{doh}}}
+*.medium.com = server:{{{doh}}}
+*.protonmail.com = server:{{{doh}}}
+*.proton.me = server:{{{doh}}}
+*.signal.org = server:{{{doh}}}
