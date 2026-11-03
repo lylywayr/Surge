@@ -1,36 +1,45 @@
 # DNS 分流模块
 
-把「本地 DNS 设置」从配置里独立出来，做成可一键开关的模块。
+用 `[Host]` 的 `server:` 语法，给**指定域名**单独指定 DNS 服务器，实现"国内走国内 DNS、境外走加密 DNS"。
 
-## 它解决什么
+## 原理
 
-Surge 的「DNS 分流」是靠**规则先于 DNS** 实现的，不是靠两个 DNS 服务器：
+Surge 的 `[Host]` 支持：
 
 ```
-请求 → 域名规则匹配
-      ├─ 命中代理 → 不做本地 DNS，域名交给节点远端解析（污染不影响）
-      └─ 命中 DIRECT → 用本地 DNS（本模块里的 dns1/dns2）
+example.com = 1.2.3.4                     # 固定 IP
+*.dev = 6.7.8.9                           # 通配
+foo.com = server:8.8.8.8                  # 指定 DNS
+bar.com = server:https://doh.pub/dns-query # 指定 DoH
 ```
 
-所以本模块负责的是「本地这一半」：把直连流量的解析器固定成干净的国内 DNS，并接管应用自己硬编码的 DNS（`hijack-dns`），避免它们绕过 Surge 直接吃污染结果。
+模块里的 `[Host]` 行会**插入到 Profile 的 [Host] 最前面**（先匹配先生效），所以本模块的规则优先于配置里的同名条目。
+
+## 覆盖范围
+
+| 分组 | 域名 |
+|---|---|
+| Google / YouTube | `google.com`、`*.googleapis.com`、`*.gstatic.com`、`*.youtube.com`、`*.googlevideo.com` 等 |
+| OpenAI / Anthropic | `*.openai.com`、`*.chatgpt.com`、`*.anthropic.com`、`*.claude.ai` |
+| Telegram | `*.telegram.org`、`*.t.me`、`*.telegra.ph` |
+| GitHub | `github.com`、`*.githubusercontent.com`、`*.githubassets.com` |
+| 社交 / 媒体 | `*.twitter.com`、`*.x.com`、`*.facebook.com`、`*.instagram.com`、`*.reddit.com`、`*.discord.com` |
+| 资讯 / 其他 | `*.wikipedia.org`、`*.bbc.com`、`*.nytimes.com`、`*.medium.com`、`*.proton.me`、`*.signal.org` |
 
 ## 参数
 
 | 参数 | 默认 | 说明 |
 |---|---|---|
-| `dns1` / `dns2` | `223.5.5.5` / `119.29.29.29` | 本地解析用的上游 DNS |
-| `hijack1` / `hijack2` | `8.8.8.8:53` / `8.8.4.4:53` | 被接管的硬编码 DNS，防止 App 绕过 |
+| `doh` | `https://doh.pub/dns-query` | 境外域名使用的加密 DNS。实测腾讯 DoH 能返回真实 IP；阿里 DoH 会返回污染结果，别用 |
 
-## 安装 / 卸载
+## 安装 / 回滚
 
-- 安装：导入本模块并启用
-- 回滚：**禁用模块**即可，配置里的 `dns-server` 会立即恢复生效（模块设置优先级高于 Profile，所以不要两边同时改）
-
-## 为什么没放 DoH
-
-实测本网络下 `encrypted-dns-server` 会出现 `DoH HTTP error: HTTP request timeout`，启用后 DNS 直接不可用；而境外域名本来就由节点远端解析，本地再做一层 DoH 收益极小、风险很大。需要时可以在模块里自己加一行 `encrypted-dns-server` 试验。
+- 安装：导入并启用
+- 回滚：禁用模块即可，Profile 的 `[Host]` 立即恢复原状
+- 想加域名：直接改模块文件里的 `[Host]`，一行一个，支持 `*` 通配
 
 ## 注意
 
-- 模块只能覆盖 `[General]`，不能改规则和策略组
-- 模块设置优先于 Profile，且在 App 里改 Profile 不会覆盖它；要调 DNS 请改模块参数
+- 只影响 **Surge 内部 DNS 客户端**（含增强模式的 fake-IP 响应）
+- 走代理的域名本来就是远端解析，这里主要让**本地解析/直连场景**拿到干净结果
+- DoH 不可达时这些域名会解析失败（没有回退），所以别把 `doh` 指到国内访问不了的地址
