@@ -1,6 +1,6 @@
 # 吾爱破解签到（Surge 模块）
 
-把 52pojie 的 Cookie 抓取 + 每日签到封装成一个模块，脚本来自 [Yuheng0101/X](https://github.com/Yuheng0101/X)。
+把 52pojie 的 Cookie 抓取 + 每日签到封装成一个模块。签到脚本来自 [Yuheng0101/X](https://github.com/Yuheng0101/X)，抓取脚本由本仓库提供（带开关）。
 
 ## 安装
 
@@ -8,29 +8,25 @@
 https://raw.githubusercontent.com/lylywayr/Surge/Master/Module/Spec/Wuai_Checkin/Wuai_Checkin.sgmodule
 ```
 
-或直接安装：
-
-```
-surge:///install-module?url=<上面地址的 percent 编码>
-```
-
-## 使用
-
-1. 开启模块后，用 **Safari 打开 https://www.52pojie.cn/home.php 并登录**（或已登录状态刷新该页），Surge 会自动抓取 Cookie
-2. 抓到后会收到通知，之后每天 09:00 自动签到
-3. 抓过一次就可以把 `吾爱破解获取Cookie` 这条脚本禁用，并删掉 MITM 的 `www.52pojie.cn`，减少不必要的解密
-
 ## 参数
 
 | 参数 | 默认 | 说明 |
 |---|---|---|
-| `hour` | 9 | 每日签到的小时（24 小时制） |
-| `minute` | 0 | 每日签到的分钟 |
+| `cookie` | `true` | 是否抓取 Cookie。抓到一次后设为 `false`，脚本不再写入、不再弹通知（MITM 仍会解密该域名的 HTTP 请求，但不做任何处理） |
+| `hour` | `9` | 每日签到的小时（24 小时制） |
+| `minute` | `0` | 每日签到的分钟 |
 
-签到时间通过 `{{{minute}}} {{{hour}}} * * *` 注入 cron，改参数即可，不用改脚本。
+签到时间通过 `{{{minute}}} {{{hour}}} * * *` 注入 cron，改参数即可。
 
-## 说明
+## 使用
 
-- 脚本不随本仓库分发，直接引用上游 `Yuheng0101/X`，上游更新会自动生效
-- 若上游删除或改名，本模块会失效，届时把 `script-path` 指到 fork 即可
-- Cookie 只保存在 Surge 的持久化存储里，本模块不上传任何数据
+1. 保持 `cookie = true`，用 Safari 打开 https://www.52pojie.cn/home.php 并登录（已登录则刷新一次）
+2. 收到「Cookie 已获取」通知后，把模块参数 `cookie` 改成 `false`
+3. 每天 `hour:minute` 自动签到；想彻底关掉解密，再禁用模块或删掉 MITM 主机名
+
+## 实现说明
+
+- Cookie 存在 Surge 持久化存储的 `wuai_cookie` 键里，与上游签到脚本读取的键一致，因此可以直接替换上游的抓取脚本
+- 关闭开关时脚本第一行就 `$done({})`，不产生任何存储写入和通知
+- 签到仍直接引用上游 `Yuheng0101/X`，上游更新自动生效
+- 本模块不上传任何数据，Cookie 只留在本机
