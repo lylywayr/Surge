@@ -1,0 +1,12 @@
+#!name=Telegram 跳转
+#!desc=把 t.me / telegram.me / telegram.dog 链接跳转到指定 Telegram 客户端（原生 deep link，失败时页面提供 parseurl 备用入口）。
+#!author=lylywayr
+#!category=工具
+#!arguments=client:Telegram
+#!arguments-desc=client：目标客户端，支持 Telegram / Swiftgram / Turrit / iMe / Nicegram / Lingogram，也可写自定义 scheme（如 mytg:native 或 mytg:parseurl）
+
+[MITM]
+hostname = %APPEND% t.me, telegram.me, telegram.dog, *.t.me
+
+[Script]
+TelegramRedirect = type=http-request, pattern=^https?:\/\/(t\.me|telegram\.me|telegram\.dog|[a-z0-9_]+\.t\.me)\//, max-size=0, timeout=10, argument="{{{client}}}", script-path=https://raw.githubusercontent.com/lylywayr/Surge/Master/Module/Spec/TelegramRedirect/TelegramRedirect.js
