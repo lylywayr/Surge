@@ -1,0 +1,11 @@
+#!name=PingMe 签到
+#!desc=打开 PingMe 的余额页自动抓 Cookie，每天 08:30 与 20:30 各签到一次。脚本来自 fmz200/wool_scripts。
+#!author=lylywayr
+#!category=签到
+
+[MITM]
+hostname = %APPEND% api.pingmeapp.net
+
+[Script]
+PingMeCookie = type=http-request, pattern=^https://api\.pingmeapp\.net/app/queryBalanceAndBonus, requires-body=1, max-size=0, binary-body-mode=1, timeout=5, script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/cookie/get_cookie.js, script-update-interval=0
+PingMeSignin = type=cron, cronexp="30 8,20 * * *", timeout=60, script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/PingMe/PingMeSignin.js
