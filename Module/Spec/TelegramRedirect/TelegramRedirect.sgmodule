@@ -9,4 +9,4 @@
 hostname = %APPEND% t.me, telegram.me, telegram.dog, *.t.me
 
 [Script]
-TelegramRedirect = type=http-request, pattern=^https?:\/\/(t\.me|telegram\.me|telegram\.dog|[a-z0-9_]+\.t\.me)\//, max-size=0, timeout=10, argument="{{{client}}}", script-path=https://raw.githubusercontent.com/lylywayr/Surge/Master/Module/Spec/TelegramRedirect/TelegramRedirect.js
+TelegramRedirect = type=http-request, pattern=^https?:\/\/(?:t\.me|telegram\.me|telegram\.dog|[a-z0-9_]+\.t\.me)(?:[/?#]|$), max-size=0, timeout=10, argument="{{{client}}}", script-path=https://raw.githubusercontent.com/lylywayr/Surge/Master/Module/Spec/TelegramRedirect/TelegramRedirect.js
