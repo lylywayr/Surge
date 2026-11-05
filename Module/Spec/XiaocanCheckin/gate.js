@@ -13,7 +13,7 @@ if (OFF) { $done({}); } else {
   else {
     $httpClient.get({ url: SRC, timeout: 40 }, (e, r, b) => {
       if (e || !b || b.length < 200) { $done({}); return; }
-      if (b.length < 300000) $persistentStore.write(b, KEY);
+      if (b.length < 2000000) $persistentStore.write(b, KEY);
       run(b);
     });
   }
