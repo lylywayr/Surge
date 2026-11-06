@@ -1,7 +1,7 @@
 #!name=DNS 分流（境外域名走代理 DoH）
 #!desc=境外域名用 [Host] 指定 Google DoH 解析（随规则走代理，不受投毒影响），国内域名仍走配置里的 dns-server。禁用模块即完全回滚。
 #!author=lylywayr
-#!category=网络
+#!category=工具面板
 #!arguments=doh:https://dns.google/dns-query
 #!arguments-desc=doh：境外域名使用的加密 DNS。默认 Google DoH（经代理访问，实测返回真实 IP）；也可换 https://cloudflare-dns.com/dns-query
 
